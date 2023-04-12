@@ -1,2 +1,2 @@
 # pytest-cocotb
-Pytest plugin for running cocotb
+A pytest plugin for running cocotb tests.
