@@ -1,0 +1,6 @@
+pytest
+cocotb
+cocotb-test
+GitPython
+pytest-xdist[mp]
+setproctitle[mp]
