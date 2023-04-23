@@ -1,12 +1,15 @@
+from multiprocessing.managers import BaseManager
+from pathlib import Path
+
 import cocotb
 from cocotb_test.simulator import run
 
-from pathlib import Path
-from multiprocessing.managers import BaseManager
-
 # A basic connection test
 
-class QueueManager(BaseManager): pass
+
+class QueueManager(BaseManager):
+    pass
+
 
 @cocotb.test()
 async def connection(dut):
@@ -14,11 +17,11 @@ async def connection(dut):
 
     if "port" in cocotb.plusargs:
         port = cocotb.plusargs["port"]
-        address = ('localhost', int(port))
-        #address = ('localhost', 6001)
+        address = ("localhost", int(port))
+        # address = ('localhost', 6001)
         print(f"\n{address=}\n")
-        QueueManager.register('get_queue')
-        m = QueueManager(address=address, authkey=b'cocotb')
+        QueueManager.register("get_queue")
+        m = QueueManager(address=address, authkey=b"cocotb")
         print("\nConnecting to manager\n")
         m.connect()
         print("\nConnected!\n")
@@ -27,14 +30,14 @@ async def connection(dut):
     else:
         print("'port' plusarg not found...")
 
-    #assert 1 == 0
+    # assert 1 == 0
 
 
 def test_connection(cocotb_connection):
     verilog_sources = []
     vhdl_sources = []
     tests_path = Path(__file__).resolve().parent
-    verilog_sources = [ tests_path / "hdl" / "adder.sv"]
+    verilog_sources = [tests_path / "hdl" / "adder.sv"]
 
     port = cocotb_connection
 
@@ -50,12 +53,12 @@ def test_connection(cocotb_connection):
             work_dir=f"sim_build",
             sim_build=f"sim_build",
             plus_args=plus_args,
-            timescale="1ns/1ps"
+            timescale="1ns/1ps",
         )
     except SystemExit:
         print("Finished")
         raise AssertionError(f"System exited due to an error.")
-        #raise AssertionError("Error to see stdout")
+        # raise AssertionError("Error to see stdout")
 
 
 if __name__ == "__main__":

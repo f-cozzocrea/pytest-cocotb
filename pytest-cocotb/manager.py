@@ -1,9 +1,22 @@
-from typing import Any
 from multiprocessing.managers import BaseManager
+from typing import Any
 
-class CocotbManager(BaseManager): pass
 
-class CocotbConnection():
+def get_manager(port: int):
+    CocotbManager.register("Cocotb", CocotbData)
+    manager = CocotbManager(address=("localhost", port))
+    return manager
+
+
+def get_connection(port: int):
+    pass
+
+
+class CocotbManager(BaseManager):
+    pass
+
+
+class CocotbData:
     def __init__(self):
         self.__arg_dict = {}
         self.__error_dict = {}
